@@ -1,3 +1,9 @@
+
+ссылка на виедо:
+https://youtu.be/sS5pq0JiRME?si=wHuY7kaXWAZuk_qs
+
+код презентации:
+
 Sub CreatePresentation()
     ' Объявляем переменные
     Dim pptApp As PowerPoint.Application
