@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Теоретический лицей имени Рамбама - Прототип</title>
+  <!-- Подключаем Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+  <!-- Подключаем Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* Обновленные стили с улучшенной адаптивностью */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    :root {
+      --primary: #005EB8; /* Синий, как на флаге Израиля */
+      --secondary: #FFD700; /* Золотой для акцентов */
+      --accent: #FFFFFF; /* Белый */
+      --background: #E6F0FA; /* Светло-голубой фон */
+      --dark: #003087; /* Темно-синий для текста */
+      --light: #FFFFFF; /* Белый */
+      --gradient: linear-gradient(135deg, var(--primary) 0%, #4A90E2 100%); /* Градиент от синего к светло-синему */
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--dark);
+      line-height: 1.6;
+      font-size: clamp(14px, 2.5vmin, 16px); /* Адаптивный размер шрифта */
+    }
+
+    h1, h2, h3 {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: var(--primary);
+      font-size: clamp(0.9rem, 2vmin, 1rem);
+    }
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    main {
+      flex: 1 0 auto;
+      padding: clamp(10px, 2vw, 20px);
+    }
+
+    .navbar {
+      background: var(--light);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+      padding: clamp(0.5rem, 2vw, 1rem) clamp(1rem, 3vw, 2rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .navbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .navbar-logo h3 {
+      color: var(--primary);
+      font-size: clamp(1.2rem, 3vw, 1.5rem);
+      font-weight: bold;
+    }
+
+    .navbar-logo svg {
+      width: clamp(24px, 5vw, 32px);
+      height: clamp(24px, 5vw, 32px);
+      fill: var(--primary);
+    }
+
+    .navbar-menu {
+      display: flex;
+      gap: clamp(1rem, 2vw, 2rem);
+      list-style: none;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .navbar-menu li {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .navbar-menu a {
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      padding: 0.5rem 0;
+      font-size: clamp(0.8rem, 2vmin, 1rem);
+      transition: color 0.3s ease;
+    }
+
+    .navbar-menu a:hover {
+      color: var(--secondary);
+    }
+
+    .navbar-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient);
+      transition: width 0.3s ease;
+    }
+
+    .navbar-menu a:hover::after {
+      width: 100%;
+    }
+
+    .navbar-menu i {
+      color: var(--primary);
+      transition: color 0.3s ease;
+      font-size: clamp(0.9rem, 2vmin, 1.1rem);
+    }
+
+    .navbar-menu li:hover i {
+      color: var(--secondary);
+    }
+
+    .hero {
+      text-align: center;
+      padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem);
+      background: linear-gradient(135deg, rgba(0, 94, 184, 0.1) 0%, rgba(74, 144, 226, 0.1) 100%);
+      border-radius: 30px;
+      margin: clamp(1rem, 2vw, 2rem) auto;
+      max-width: 1000px;
+      box-shadow: 0 8px 40px rgba(0, 94, 184, 0.1);
+    }
+
+    .hero h1 {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2.5vmin, 1.2rem);
+      color: var(--secondary);
+      margin-top: 10px;
+    }
+
+    .slider {
+      padding: clamp(1rem, 3vw, 2rem);
+      position: relative;
+    }
+
+    .slider h2 {
+      font-size: clamp(1.5rem, 4vw, 1.8rem);
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .slider-wrapper {
+      display: flex;
+      gap: clamp(1rem, 2vw, 2rem);
+      overflow-x: auto;
+      padding: clamp(0.5rem, 2vw, 1rem) clamp(20px, 5vw, 40px);
+      scroll-behavior: smooth;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .slider-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    .slider-controls {
+      position: relative;
+    }
+
+    .slider-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--gradient);
+      color: var(--light);
+      width: clamp(30px, 5vw, 40px);
+      height: clamp(30px, 5vw, 40px);
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      z-index: 2;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .slider-button:hover {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .slider-button-left {
+      left: 10px;
+    }
+
+    .slider-button-right {
+      right: 10px;
+    }
+
+    .card {
+      background: var(--light);
+      border-radius: 20px;
+      padding: clamp(1rem, 2vw, 1.5rem);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+      position: relative;
+      flex: 0 0 clamp(250px, 30vw, 300px);
+      min-width: clamp(250px, 30vw, 300px);
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient);
+    }
+
+    .card-image {
+      width: 100%;
+      height: clamp(150px, 20vw, 200px);
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      color: var(--dark);
+      font-size: clamp(1rem, 2.5vmin, 1.25rem);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-date {
+      font-size: clamp(0.8rem, 2vmin, 0.9rem);
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-description {
+      color: #666;
+      font-size: clamp(0.85rem, 2vmin, 0.95rem);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal {
+      background: var(--light);
+      padding: clamp(1rem, 3vw, 2rem);
+      border-radius: 20px;
+      max-width: 90%;
+      width: clamp(300px, 80vw, 600px);
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: clamp(1.2rem, 3vmin, 1.5rem);
+      cursor: pointer;
+      color: var(--dark);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-close:hover {
+      transform: rotate(90deg);
+      color: var(--secondary);
+    }
+
+    .modal-image {
+      width: 100%;
+      max-height: clamp(200px, 40vh, 300px);
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .modal h2 {
+      font-size: clamp(1.2rem, 3vmin, 1.5rem);
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .modal-date {
+      font-size: clamp(0.8rem, 2vmin, 0.9rem);
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+
+    .modal p {
+      font-size: clamp(0.9rem, 2vmin, 1rem);
+      color: var(--dark);
+    }
+
+    .footer {
+      flex-shrink: 0;
+      background-color: var(--primary);
+      color: var(--light);
+      padding: clamp(10px, 2vw, 15px) clamp(10px, 2vw, 20px);
+      width: 100%;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: clamp(10px, 2vw, 20px);
+      flex-wrap: wrap;
+    }
+
+    .footer-section {
+      text-align: center;
+    }
+
+    .footer-section p {
+      font-size: clamp(0.7rem, 1.5vmin, 0.9rem);
+      color: var(--light);
+      margin: 5px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .footer-section i {
+      color: var(--secondary);
+      font-size: clamp(0.8rem, 2vmin, 1rem);
+    }
+
+    .about-content, .activity-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: clamp(10px, 2vw, 20px);
+    }
+
+    .about-content h2, .activity-content h2 {
+      font-size: clamp(1.2rem, 3vmin, 1.5rem);
+      color: var(--primary);
+      margin: clamp(10px, 2vw, 20px) 0 10px;
+    }
+
+    .about-content p, .activity-content p {
+      font-size: clamp(0.9rem, 2vmin, 1rem);
+      color: var(--dark);
+      margin-bottom: 15px;
+    }
+
+    .about-content ul, .activity-content ul {
+      list-style: disc;
+      padding-left: 20px;
+      color: var(--dark);
+    }
+
+    .about-content li, .activity-content li {
+      margin-bottom: 10px;
+      font-size: clamp(0.9rem, 2vmin, 1rem);
+    }
+
+    .news-filter {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(5px, 2vw, 10px) clamp(10px, 2vw, 20px);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: var(--light);
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .news-filter label {
+      font-size: clamp(0.9rem, 2vmin, 1rem);
+      color: var(--primary);
+    }
+
+    .news-filter select {
+      padding: 5px;
+      font-size: clamp(0.9rem, 2vmin, 1rem);
+      border: 1px solid var(--primary);
+      border-radius: 4px;
+      background-color: var(--light);
+      color: var(--dark);
+      transition: border-color 0.3s ease;
+    }
+
+    .news-filter select:focus {
+      border-color: var(--secondary);
+      outline: none;
+    }
+
+    .news-search {
+      padding: 5px;
+      font-size: clamp(0.9rem, 2vmin, 1rem);
+      border: 1px solid var(--primary);
+      border-radius: 4px;
+      background-color: var(--light);
+      color: var(--dark);
+      transition: border-color 0.3s ease;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .news-search:focus {
+      border-color: var(--secondary);
+      outline: none;
+    }
+
+    .contacts-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(10px, 2vw, 20px);
+      display: flex;
+      gap: clamp(20px, 3vw, 40px);
+      flex-wrap: wrap;
+    }
+
+    .contacts-info h2, .contacts-form h2 {
+      font-size: clamp(1.2rem, 3vmin, 1.5rem);
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .contacts-info p {
+      font-size: clamp(0.9rem, 2vmin, 1rem);
+      color: var(--dark);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .contacts-info i {
+      color: var(--primary);
+    }
+
+    .contacts-form {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: clamp(0.9rem, 2vmin, 1rem);
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      font-size: clamp(0.9rem, 2vmin, 1rem);
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+    }
+
+    .contacts-form button {
+      background: var(--gradient);
+      color: var(--light);
+      padding: clamp(8px, 2vmin, 10px) clamp(15px, 3vmin, 20px);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: clamp(0.9rem, 2vmin, 1rem);
+      font-weight: 500;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .contacts-form button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Стили для страницы Schedule */
+    .schedule-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(10px, 2vw, 20px);
+    }
+
+    .schedule-content h1 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      margin-bottom: 20px;
+    }
+
+    .schedule-filters {
+      display: flex;
+      gap: clamp(10px, 2vw, 20px);
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      background: var(--light);
+      padding: clamp(10px, 2vw, 15px);
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .filter-group label {
+      font-size: clamp(0.9rem, 2vmin, 1rem);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-group label i {
+      color: var(--primary);
+    }
+
+    .filter-group select {
+      padding: 5px;
+      font-size: clamp(0.9rem, 2vmin, 1rem);
+      border: 1px solid var(--primary);
+      border-radius: 4px;
+      background-color: var(--light);
+      color: var(--dark);
+      transition: border-color 0.3s ease;
+    }
+
+    .filter-group select:focus {
+      border-color: var(--secondary);
+      outline: none;
+    }
+
+    .filter-group select option[selected] {
+      background: var(--secondary);
+      color: var(--dark);
+    }
+
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--light);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .schedule-table th, .schedule-table td {
+      padding: clamp(8px, 2vmin, 12px);
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: clamp(0.8rem, 2vmin, 1rem);
+    }
+
+    .schedule-table th {
+      background: var(--gradient);
+      color: var(--light);
+      font-weight: 600;
+    }
+
+    .schedule-table td {
+      color: var(--dark);
+    }
+
+    .schedule-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .schedule-table tr:hover {
+      background: rgba(0, 94, 184, 0.05);
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: clamp(0.5rem, 2vw, 1rem);
+      }
+
+      .navbar-menu {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .hero {
+        padding: clamp(1rem, 3vw, 2rem) clamp(0.5rem, 2vw, 1rem);
+        margin: 1rem;
+      }
+
+      .slider {
+        padding: 1rem;
+      }
+
+      .slider-wrapper {
+        padding: clamp(0.5rem, 2vw, 1rem) clamp(10px, 3vw, 20px);
+      }
+
+      .card {
+        flex: 0 0 clamp(200px, 40vw, 250px);
+        min-width: clamp(200px, 40vw, 250px);
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .contacts-content {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .news-filter {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .news-search {
+        width: 100%;
+      }
+
+      .schedule-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      .schedule-table th, .schedule-table td {
+        min-width: 120px;
+      }
+
+      .schedule-filters {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar-logo h3 {
+        font-size: clamp(1rem, 3vw, 1.2rem);
+      }
+
+      .navbar-logo svg {
+        width: clamp(20px, 4vw, 24px);
+        height: clamp(20px, 4vw, 24px);
+      }
+
+      .hero h1 {
+        font-size: clamp(1.2rem, 4vw, 1.5rem);
+      }
+
+      .hero p {
+        font-size: clamp(0.8rem, 2vmin, 0.9rem);
+      }
+
+      .slider h2 {
+        font-size: clamp(1.2rem, 3vw, 1.3rem);
+      }
+
+      .slider-wrapper {
+        padding: clamp(0.5rem, 2vw, 1rem) clamp(5px, 2vw, 10px);
+      }
+
+      .card {
+        flex: 0 0 100%;
+        min-width: 100%;
+      }
+
+      .schedule-table th, .schedule-table td {
+        min-width: 100px;
+        font-size: clamp(0.7rem, 1.5vmin, 0.8rem);
+      }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .card {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.22.5/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    // Компонент Modal
+    const Modal = ({ news, onClose }) => {
+      return (
+        <div className="modal-overlay" onClick={onClose}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={onClose}>×</button>
+            <img src={news.image} alt={news.title} className="modal-image" />
+            <h2>{news.title}</h2>
+            <p className="modal-date">{news.date}</p>
+            <p>{news.description}</p>
+          </div>
+        </div>
+      );
+    };
+
+    // Компонент Home
+    const Home = () => {
+      return (
+        <div className="hero">
+          <h1>Добро пожаловать в Теоретический лицей имени Рамбама</h1>
+          <p>Мы создаем будущее, заботясь о настоящем каждого ребенка.</p>
+        </div>
+      );
+    };
+
+    // Компонент About
+    const About = () => {
+      return (
+        <div className="about-content">
+          <h1>О нас</h1>
+          <p>Добро пожаловать в Теоретический лицей имени Рамбама — место, где мы создаем будущее, заботясь о настоящем каждого ребенка.</p>
+          <h2>Наша история</h2>
+          <p>Теоретический лицей имени Рамбама был основан в 1990 году в городе Кишинев с целью предоставления качественного образования для детей нашего сообщества. За более чем 30 лет мы стали одной из ведущих школ региона, воспитав тысячи выпускников, которые сегодня вносят вклад в развитие общества. Мы гордимся нашими традициями и стремимся к инновациям, чтобы соответствовать вызовам современного мира.</p>
+          <h2>История и традиции</h2>
+          <p>Мы уделяем большое внимание культурным традициям и воспитанию у детей чувства гордости за свою историю. В нашем лицее ежегодно отмечаются важные праздники, такие как Песах, День знаний и национальные праздники. Мы организуем тематические мероприятия, которые помогают ученикам узнать больше о культуре и традициях еврейского народа. Например, ежегодно мы проводим празднование Песаха, где ученики участвуют в викторинах, конкурсах и выставках, посвященных истории еврейского народа.</p>
+          <h2>Наша миссия</h2>
+          <p>Наша миссия — создать вдохновляющую и безопасную среду, где каждый ребенок сможет раскрыть свои таланты. Мы стремимся не только дать знания, но и воспитать ответственных, уверенных и творческих личностей, готовых к вызовам XXI века.</p>
+          <h2>Наши ценности</h2>
+          <ul>
+            <li>Качество образования: Мы используем современные методики обучения, чтобы обеспечить высокий уровень знаний.</li>
+            <li>Забота о каждом: Мы поддерживаем индивидуальный подход к каждому ученику, учитывая его интересы и способности.</li>
+            <li>Сообщество: Мы создаем атмосферу взаимопомощи и уважения между учениками, учителями и родителями.</li>
+            <li>Инновации: Мы внедряем новые технологии и подходы, чтобы сделать обучение увлекательным и эффективным.</li>
+          </ul>
+          <h2>Наша команда</h2>
+          <p>Наш лицей гордится своим коллективом профессионалов, которые с любовью и преданностью работают для блага учеников. Директор лицея, Иванова Анна Петровна, руководит учреждением с 2015 года и за это время внедрила множество инициатив, направленных на улучшение качества образования. Наша команда включает опытных учителей, психологов и административный персонал, которые всегда готовы поддержать детей и их родителей.</p>
+        </div>
+      );
+    };
+
+    // Компонент News
+    const News = () => {
+      const [news, setNews] = useState([]);
+      const [filteredNews, setFilteredNews] = useState([]);
+      const [selectedNews, setSelectedNews] = useState(null);
+      const [searchQuery, setSearchQuery] = useState('');
+      const sliderRef = useRef(null);
+
+      useEffect(() => {
+        const newsData = [
+          { id: 1, title: 'Олимпиада по математике', date: '10.03.2025', description: 'Наши ученики заняли призовые места на городской олимпиаде по математике. Поздравляем победителей!', image: 'https://via.placeholder.com/300x200' },
+          { id: 2, title: 'Экологический проект "Чистая планета"', date: '15.03.2025', description: 'Ученики 7-го класса приняли участие в экологическом проекте "Чистая планета", убрав территорию школьного двора.', image: 'https://via.placeholder.com/300x200' },
+          { id: 3, title: 'Визит в Парламент Молдовы', date: '20.03.2025', description: 'Ученики 10-го класса посетили Парламент Молдовы по приглашению депутата, чтобы узнать больше о работе правительства.', image: 'https://via.placeholder.com/300x200' },
+          { id: 4, title: 'Празднование Дня знаний', date: '01.09.2024', description: '1 сентября мы отметили День знаний с торжественной линейкой и праздничным концертом.', image: 'https://via.placeholder.com/300x200' },
+          { id: 5, title: 'Конкурс чтецов', date: '05.02.2025', description: 'Наши ученики приняли участие в конкурсе чтецов, посвященном творчеству Михаила Лермонтова.', image: 'https://via.placeholder.com/300x200' },
+        ];
+        setNews(newsData);
+        setFilteredNews(newsData);
+      }, []);
+
+      const handleSearch = (e) => {
+        const query = e.target.value.toLowerCase();
+        setSearchQuery(query);
+        const filtered = news.filter(
+          (item) =>
+            item.title.toLowerCase().includes(query) ||
+            item.description.toLowerCase().includes(query)
+        );
+        setFilteredNews(filtered);
+      };
+
+      const scrollLeft = () => {
+        if (sliderRef.current) {
+          sliderRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+        }
+      };
+
+      const scrollRight = () => {
+        if (sliderRef.current) {
+          sliderRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+        }
+      };
+
+      const openModal = (newsItem) => {
+        setSelectedNews(newsItem);
+      };
+
+      const closeModal = () => {
+        setSelectedNews(null);
+      };
+
+      return (
+        <div className="news">
+          <div className="news-filter">
+            <label>Сортировать по дате:</label>
+            <select>
+              <option>От новых к старым</option>
+              <option>От старых к новым</option>
+            </select>
+            <input
+              type="text"
+              placeholder="Поиск новостей..."
+              value={searchQuery}
+              onChange={handleSearch}
+              className="news-search"
+            />
+          </div>
+
+          <div className="slider">
+            <h2>Последние новости и события</h2>
+            <div className="slider-controls">
+              <button className="slider-button slider-button-left" onClick={scrollLeft}>←</button>
+              <div className="slider-wrapper" ref={sliderRef}>
+                {filteredNews.length > 0 ? (
+                  filteredNews.map((newsItem) => (
+                    <div key={newsItem.id} className="card" onClick={() => openModal(newsItem)}>
+                      <img src={newsItem.image} alt={newsItem.title} className="card-image" />
+                      <div className="card-content">
+                        <h3 className="card-title">{newsItem.title}</h3>
+                        <p className="card-date">{newsItem.date}</p>
+                        <p className="card-description">{newsItem.description}</p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p>Новостей не найдено.</p>
+                )}
+              </div>
+              <button className="slider-button slider-button-right" onClick={scrollRight}>→</button>
+            </div>
+          </div>
+
+          {selectedNews && <Modal news={selectedNews} onClose={closeModal} />}
+        </div>
+      );
+    };
+
+    // Компонент Activity
+    const Activity = () => {
+      return (
+        <div className="activity-content">
+          <h1>Деятельность</h1>
+          <p>В этом разделе вы найдете информацию о деятельности нашего лицея, включая отчеты, планы и финансовую прозрачность.</p>
+          <h2>Приказы и распоряжения</h2>
+          <ul>
+            <li><a href="#">Приказ о начале учебного года 2024–2025</a></li>
+            <li><a href="#">Распоряжение о проведении Дня учителя</a></li>
+          </ul>
+          <h2>Отчеты о деятельности</h2>
+          <ul>
+            <li><a href="#">Отчет о деятельности лицея за 2024 год</a></li>
+            <li><a href="#">Отчет о деятельности лицея за 2023 год</a></li>
+          </ul>
+          <h2>Бюджет</h2>
+          <ul>
+            <li><a href="#">Планируемый бюджет на 2025 год</a></li>
+            <li><a href="#">Исполненные расходы за 2024 год</a></li>
+          </ul>
+          <h2>Планы действий</h2>
+          <ul>
+            <li><a href="#">План мероприятий на 2025 год</a></li>
+          </ul>
+        </div>
+      );
+    };
+
+    // Компонент Schedule
+    const Schedule = () => {
+      const [selectedClass, setSelectedClass] = useState('2');
+      const [selectedDay, setSelectedDay] = useState('');
+
+      // Определяем текущий день недели
+      const daysOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+      const today = new Date();
+      const currentDayIndex = today.getDay() === 0 ? 6 : today.getDay() - 1; // Воскресенье (0) -> Суббота (6)
+      const currentDay = daysOfWeek[currentDayIndex];
+
+      useEffect(() => {
+        setSelectedDay(currentDay);
+      }, []);
+
+      // Расписание для разных классов и дней
+      const scheduleData = {
+        '2': {
+          'Понедельник': [
+            { time: '08:00 - 08:45', subject: 'Математика', teacher: 'Иванова А.П.', room: '201' },
+            { time: '08:55 - 09:40', subject: 'Русский язык', teacher: 'Петрова Е.В.', room: '202' },
+            { time: '09:50 - 10:35', subject: 'История', teacher: 'Сидоров М.И.', room: '203' },
+            { time: '10:45 - 11:30', subject: 'Физкультура', teacher: 'Козлов Д.А.', room: 'Спортзал' },
+            { time: '11:40 - 12:25', subject: 'Иврит', teacher: 'Рабинович Л.М.', room: '204' },
+          ],
+          'Вторник': [
+            { time: '08:00 - 08:45', subject: 'Литература', teacher: 'Петрова Е.В.', room: '202' },
+            { time: '08:55 - 09:40', subject: 'Математика', teacher: 'Иванова А.П.', room: '201' },
+            { time: '09:50 - 10:35', subject: 'География', teacher: 'Сидоров М.И.', room: '203' },
+            { time: '10:45 - 11:30', subject: 'Искусство', teacher: 'Козлов Д.А.', room: '205' },
+          ],
+          'Среда': [
+            { time: '08:00 - 08:45', subject: 'Физика', teacher: 'Иванова А.П.', room: '201' },
+            { time: '08:55 - 09:40', subject: 'Русский язык', teacher: 'Петрова Е.В.', room: '202' },
+            { time: '09:50 - 10:35', subject: 'История', teacher: 'Сидоров М.И.', room: '203' },
+            { time: '10:45 - 11:30', subject: 'Иврит', teacher: 'Рабинович Л.М.', room: '204' },
+          ],
+          'Четверг': [
+            { time: '08:00 - 08:45', subject: 'Математика', teacher: 'Иванова А.П.', room: '201' },
+            { time: '08:55 - 09:40', subject: 'Литература', teacher: 'Петрова Е.В.', room: '202' },
+            { time: '09:50 - 10:35', subject: 'Биология', teacher: 'Сидоров М.И.', room: '203' },
+            { time: '10:45 - 11:30', subject: 'Физкультура', teacher: 'Козлов Д.А.', room: 'Спортзал' },
+          ],
+          'Пятница': [
+            { time: '08:00 - 08:45', subject: 'Иврит', teacher: 'Рабинович Л.М.', room: '204' },
+            { time: '08:55 - 09:40', subject: 'Русский язык', teacher: 'Петрова Е.В.', room: '202' },
+            { time: '09:50 - 10:35', subject: 'История', teacher: 'Сидоров М.И.', room: '203' },
+            { time: '10:45 - 11:30', subject: 'Математика', teacher: 'Иванова А.П.', room: '201' },
+          ],
+          'Суббота': [
+            { time: '08:00 - 08:45', subject: 'Классный час', teacher: 'Иванова А.П.', room: '201' },
+            { time: '08:55 - 09:40', subject: 'Иврит', teacher: 'Рабинович Л.М.', room: '204' },
+            { time: '09:50 - 10:35', subject: 'История', teacher: 'Сидоров М.И.', room: '203' },
+          ],
+        },
+        '3': {
+          'Понедельник': [
+            { time: '08:00 - 08:45', subject: 'Физика', teacher: 'Иванова А.П.', room: '201' },
+            { time: '08:55 - 09:40', subject: 'Русский язык', teacher: 'Петрова Е.В.', room: '202' },
+            { time: '09:50 - 10:35', subject: 'История', teacher: 'Сидоров М.И.', room: '203' },
+            { time: '10:45 - 11:30', subject: 'Иврит', teacher: 'Рабинович Л.М.', room: '204' },
+          ],
+        },
+      };
+
+      const currentSchedule = scheduleData[selectedClass]?.[selectedDay] || [];
+
+      return (
+        <div className="schedule-content">
+          <h1>Расписание</h1>
+          <div className="schedule-filters">
+            <div className="filter-group">
+              <label><i className="fas fa-users"></i> Класс:</label>
+              <select value={selectedClass} onChange={(e) => setSelectedClass(e.target.value)}>
+                {[...Array(12).keys()].map(i => (
+                  <option key={i + 1} value={i + 1}>{i + 1}</option>
+                ))}
+              </select>
+            </div>
+            <div className="filter-group">
+              <label><i className="fas fa-calendar-day"></i> День недели:</label>
+              <select value={selectedDay} onChange={(e) => setSelectedDay(e.target.value)}>
+                {daysOfWeek.map(day => (
+                  <option key={day} value={day} selected={day === currentDay}>{day}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <table className="schedule-table">
+            <thead>
+              <tr>
+                <th>Время</th>
+                <th>Предмет</th>
+                <th>Учитель</th>
+                <th>Кабинет</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentSchedule.length > 0 ? (
+                currentSchedule.map((lesson, index) => (
+                  <tr key={index}>
+                    <td>{lesson.time}</td>
+                    <td>{lesson.subject}</td>
+                    <td>{lesson.teacher}</td>
+                    <td>{lesson.room}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4">Нет уроков на этот день.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      );
+    };
+
+    // Компонент Vacancies
+    const Vacancies = () => {
+      return (
+        <div className="activity-content">
+          <h1>Вакансии</h1>
+          <p>Мы всегда рады новым талантливым специалистам, которые хотят стать частью нашей команды!</p>
+          <h2>Текущие вакансии</h2>
+          <ul>
+            <li>
+              <strong>Пикми</strong> (с 01.05.2025)
+              <p>Требования: высшее образование, опыт работы от 3 лет, знание современных методик преподавания.</p>
+              <p>Заявки принимаются до 15.04.2025 по адресу: rambam@example.com</p>
+            </li>
+            <li>
+              <strong>Найк Про</strong> (с 01.06.2025)
+              <p>Требования: высшее педагогическое образование, опыт работы в управлении не менее 5 лет.</p>
+              <p>Заявки принимаются до 20.05.2025 по адресу: rambam@example.com</p>
+            </li>
+          </ul>
+        </div>
+      );
+    };
+
+    // Компонент Contacts
+    const Contacts = () => {
+      return (
+        <div className="contacts-content">
+          <div className="contacts-info">
+            <h2>Контактная информация</h2>
+            <p><i className="fas fa-map-marker-alt"></i> Адрес: Кишинев, ул. Независимости 5/2</p>
+            <p><i className="fas fa-phone"></i> Телефон: 022 774 448</p>
+            <p><i className="fas fa-envelope"></i> Email: rambam@example.com</p>
+          </div>
+          <div className="contacts-form">
+            <h2>Свяжитесь с нами</h2>
+            <div className="form-group">
+              <label>Имя</label>
+              <input type="text" placeholder="Ваше имя" />
+            </div>
+            <div className="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="Ваш email" />
+            </div>
+            <div className="form-group">
+              <label>Сообщение</label>
+              <textarea placeholder="Ваше сообщение" rows="5"></textarea>
+            </div>
+            <button>Отправить</button>
+          </div>
+        </div>
+      );
+    };
+
+    // Главный компонент App
+    const App = () => {
+      const [currentPage, setCurrentPage] = useState('home');
+
+      const renderPage = () => {
+        switch (currentPage) {
+          case 'home': return <Home />;
+          case 'about': return <About />;
+          case 'news': return <News />;
+          case 'activity': return <Activity />;
+          case 'schedule': return <Schedule />;
+          case 'vacancies': return <Vacancies />;
+          case 'contacts': return <Contacts />;
+          default: return <Home />;
+        }
+      };
+
+      return (
+        <div className="app">
+          <nav className="navbar">
+            <div className="navbar-logo">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="50,10 90,90 10,90" fill="none" stroke="currentColor" strokeWidth="8"/>
+                <polygon points="50,90 90,10 10,10" fill="none" stroke="currentColor" strokeWidth="8"/>
+              </svg>
+              <h3>Теоретический лицей имени Рамбама</h3>
+            </div>
+            <ul className="navbar-menu">
+              <li onClick={() => setCurrentPage('home')}><i className="fas fa-home"></i><a>Главная</a></li>
+              <li onClick={() => setCurrentPage('about')}><i className="fas fa-info-circle"></i><a>О нас</a></li>
+              <li onClick={() => setCurrentPage('news')}><i className="fas fa-newspaper"></i><a>Новости</a></li>
+              <li onClick={() => setCurrentPage('activity')}><i className="fas fa-tasks"></i><a>Деятельность</a></li>
+              <li onClick={() => setCurrentPage('schedule')}><i className="fas fa-calendar-alt"></i><a>Расписание</a></li>
+              <li onClick={() => setCurrentPage('vacancies')}><i className="fas fa-briefcase"></i><a>Вакансии</a></li>
+              <li onClick={() => setCurrentPage('contacts')}><i className="fas fa-address-book"></i><a>Контакты</a></li>
+            </ul>
+          </nav>
+
+          <main>{renderPage()}</main>
+
+          <footer className="footer">
+            <div className="footer-content">
+              <div className="footer-section">
+                <p><i className="fas fa-copyright"></i> © 2025 Теоретический лицей имени Рамбама. Все права защищены.</p>
+              </div>
+              <div className="footer-section">
+                <p><i className="fas fa-map-marker-alt"></i> Адрес: Кишинев, ул. Независимости 5/2</p>
+                <p><i className="fas fa-phone"></i> Телефон: 022 774 448</p>
+                <p><i className="fas fa-envelope"></i> Email: rambam@example.com</p>
+              </div>
+            </div>
+          </footer>
+        </div>
+      );
+    };
+
+    // Рендеринг приложения
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>
