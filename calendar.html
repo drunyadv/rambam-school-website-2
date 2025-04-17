@@ -1,0 +1,237 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row =>
+                    row.some(cell => cell !== '' && cell !== null && cell !== undefined)
+                );
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь до БАКа</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .calendar-container {
+            width: 1000px;
+            background: linear-gradient(135deg, #ffffff, #e8ecef);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .date {
+            font-size: 1.5em;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+
+        .month-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .calendar-month {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .month-title {
+            font-size: 1.8em;
+            color: #34495e;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .calendar-day {
+            padding: 12px;
+            background: #ecf0f1;
+            border-radius: 8px;
+            font-size: 1.1em;
+            color: #34495e;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-day.header {
+            background: #3498db;
+            color: white;
+            font-weight: 700;
+        }
+
+        .calendar-day.empty {
+            background: transparent;
+        }
+
+        .calendar-day.target {
+            background: #2ecc71;
+            color: white;
+            font-weight: 700;
+        }
+
+        .calendar-day:hover:not(.header):not(.empty) {
+            background: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 1em;
+            color: #7f8c8d;
+        }
+
+        .print-button {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: white;
+            background: #3498db;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .print-button:hover {
+            background: #2980b9;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .calendar-container {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+            }
+            .month-container {
+                flex-direction: row;
+            }
+            .print-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calendar-container">
+        <h1>ДО БАКА ОСТАЛОСЬ:</h1>
+        <button class="print-button" onclick="window.print()">Печать календаря</button>
+        <div class="date">Сдача БАКа: 03.06.2025</div>
+        <div class="month-container">
+            <div class="calendar-month">
+                <div class="month-title">Апрель 2025</div>
+                <div class="calendar-grid" id="calendar-april"></div>
+            </div>
+            <div class="calendar-month">
+                <div class="month-title">Май 2025</div>
+                <div class="calendar-grid" id="calendar-may"></div>
+            </div>
+            <div class="calendar-month">
+                <div class="month-title">Июнь 2025</div>
+                <div class="calendar-grid" id="calendar-june"></div>
+            </div>
+        </div>
+        <div class="footer">Подготовьтесь к успеху!</div>
+    </div>
+
+    <script>
+        function generateCalendar(month, year, containerId) {
+            const calendar = document.getElementById(containerId);
+            const daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            // Weekday headers
+            daysOfWeek.forEach(day => {
+                const dayElement = document.createElement('div');
+                dayElement.classList.add('calendar-day', 'header');
+                dayElement.textContent = day;
+                calendar.appendChild(dayElement);
+            });
+
+            // Empty days before the first day of the month
+            const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1;
+            for (let i = 0; i < adjustedFirstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.classList.add('calendar-day', 'empty');
+                calendar.appendChild(emptyDay);
+            }
+
+            // Days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.classList.add('calendar-day');
+                dayElement.textContent = day;
+
+                // Highlight target date (03.06.2025)
+                if (year === 2025 && month === 5 && day === 3) {
+                    dayElement.classList.add('target');
+                }
+
+                calendar.appendChild(dayElement);
+            }
+        }
+
+        // Generate calendars for April, May, and June 2025
+        generateCalendar(3, 2025, 'calendar-april'); // April
+        generateCalendar(4, 2025, 'calendar-may');   // May
+        generateCalendar(5, 2025, 'calendar-june');  // June
+    </script>
+</body>
+</html>
